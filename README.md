@@ -47,7 +47,7 @@ Set up a daily or weekly cron job and your agent will automatically check for ne
 ### Option 1: bird CLI (easiest)
 
 ```bash
-npm install -g bird-cli
+npm install -g @steipete/bird
 # Log into x.com in Chrome, then:
 bird --chrome-profile "Default" bookmarks --json
 ```
@@ -86,7 +86,7 @@ references/
 
 ## Requirements
 
-**bird CLI path:** Node.js, npm, bird-cli, browser with X login  
+**bird CLI path:** Node.js, npm, @steipete/bird, browser with X login  
 **X API path:** Python 3.10+, X Developer account, OAuth 2.0 app
 
 ## Install as OpenClaw Skill

@@ -6,7 +6,7 @@ Two ways to authenticate. Pick whichever works for you.
 
 ## Option A: bird CLI (browser cookies)
 
-Easiest if you have bird installed (`npm i -g bird-cli`).
+Easiest if you have bird installed (`npm i -g @steipete/bird`).
 
 ### A1. Chrome Cookie Extraction (Recommended)
 
@@ -121,7 +121,7 @@ As of 2025, the X API uses **pay-per-usage pricing**. Bookmark reads are low vol
 
 | | bird CLI | X API v2 |
 |---|---|---|
-| **Setup** | `npm i -g bird-cli` + browser login | Developer account + OAuth |
+| **Setup** | `npm i -g @steipete/bird` + browser login | Developer account + OAuth |
 | **Auth** | Browser cookies (auto) | OAuth 2.0 tokens (auto-refresh) |
 | **Cost** | Free | Pay-per-use (very cheap) |
 | **Reliability** | Depends on cookie access | Official API, stable |

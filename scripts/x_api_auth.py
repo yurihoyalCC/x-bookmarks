@@ -33,7 +33,7 @@ AUTHORIZE_URL = "https://x.com/i/oauth2/authorize"
 TOKEN_URL = "https://api.x.com/2/oauth2/token"
 REDIRECT_PORT = 8739
 REDIRECT_URI = f"http://localhost:{REDIRECT_PORT}/callback"
-SCOPES = "tweet.read users.read bookmark.read bookmark.write offline.access"
+SCOPES = "tweet.read users.read bookmark.read offline.access"
 
 
 def save_config(client_id: str, client_secret: str = ""):
@@ -42,7 +42,8 @@ def save_config(client_id: str, client_secret: str = ""):
     if client_secret:
         config["client_secret"] = client_secret
     CONFIG_FILE.write_text(json.dumps(config, indent=2))
-    print(f"Config saved to {CONFIG_FILE}")
+    os.chmod(CONFIG_FILE, 0o600)
+    print(f"Config saved to {CONFIG_FILE}", file=sys.stderr)
 
 
 def load_config() -> dict:
@@ -55,7 +56,7 @@ def save_tokens(tokens: dict):
     TOKEN_DIR.mkdir(parents=True, exist_ok=True)
     TOKEN_FILE.write_text(json.dumps(tokens, indent=2))
     os.chmod(TOKEN_FILE, 0o600)
-    print(f"Tokens saved to {TOKEN_FILE}")
+    print(f"Tokens saved to {TOKEN_FILE}", file=sys.stderr)
 
 
 def load_tokens() -> dict | None:
@@ -184,8 +185,8 @@ def authorize(client_id: str, client_secret: str = ""):
     server = http.server.HTTPServer(("localhost", REDIRECT_PORT), Handler)
     server.timeout = 120
 
-    print(f"\n🔐 Opening browser for X authorization...")
-    print(f"   If it doesn't open, visit:\n   {auth_url}\n")
+    print(f"\n🔐 Opening browser for X authorization...", file=sys.stderr)
+    print(f"   If it doesn't open, visit:\n   {auth_url}\n", file=sys.stderr)
     webbrowser.open(auth_url)
 
     # Wait for callback
@@ -193,23 +194,23 @@ def authorize(client_id: str, client_secret: str = ""):
     server.server_close()
 
     if result["error"]:
-        print(f"❌ Authorization failed: {result['error']}")
+        print(f"❌ Authorization failed: {result['error']}", file=sys.stderr)
         sys.exit(1)
 
     if not result["code"]:
-        print("❌ No authorization code received (timeout?)")
+        print("❌ No authorization code received (timeout?)", file=sys.stderr)
         sys.exit(1)
 
-    print("🔄 Exchanging code for tokens...")
+    print("🔄 Exchanging code for tokens...", file=sys.stderr)
     tokens = exchange_code(result["code"], verifier, client_id, client_secret)
     save_tokens(tokens)
     save_config(client_id, client_secret)
 
-    print(f"✅ Authenticated! Access token expires in {tokens.get('expires_in', '?')}s")
+    print(f"✅ Authenticated! Access token expires in {tokens.get('expires_in', '?')}s", file=sys.stderr)
     if tokens.get("refresh_token"):
-        print("   Refresh token saved — will auto-refresh.")
+        print("   Refresh token saved — will auto-refresh.", file=sys.stderr)
     else:
-        print("   ⚠️  No refresh token. Add 'offline.access' scope or re-auth when expired.")
+        print("   ⚠️  No refresh token. Add 'offline.access' scope or re-auth when expired.", file=sys.stderr)
 
 
 def main():
@@ -234,9 +235,9 @@ def main():
         save_config(args.client_id, args.client_secret)
         token = get_valid_token()
         if token:
-            print(f"✅ Token refreshed successfully")
+            print(f"✅ Token refreshed successfully", file=sys.stderr)
         else:
-            print("❌ Refresh failed. Re-run without --refresh to re-authorize.")
+            print("❌ Refresh failed. Re-run without --refresh to re-authorize.", file=sys.stderr)
             sys.exit(1)
         return
 

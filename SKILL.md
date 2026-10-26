@@ -14,7 +14,7 @@ requires:
     - CT0: "X/Twitter CSRF token (from browser cookies, for bird CLI auth)"
     - X_API_BEARER_TOKEN: "Optional: X API v2 Bearer token (alternative to bird CLI)"
   bins:
-    - bird: "bird-cli (npm i -g bird-cli) - preferred backend"
+    - bird: "@steipete/bird (npm i -g @steipete/bird) - preferred backend"
   files:
     - .env.bird: "Optional: stores AUTH_TOKEN and CT0 for bird CLI"
     - ~/.config/x-bookmarks/tokens.json: "OAuth 2.0 tokens for X API v2 backend"
@@ -42,7 +42,7 @@ This skill supports **two backends**. Pick the first one that works:
 
 ### 1. bird CLI (preferred if available)
 - Fast, no API key needed, uses browser cookies
-- Install: `npm install -g bird-cli`
+- Install: `npm install -g @steipete/bird`
 - Test: `bird whoami` — if this prints a username, you're good
 
 ### 2. X API v2 (fallback)
@@ -201,8 +201,8 @@ For stale bookmarks:
 
 | Error | Cause | Fix |
 |-------|-------|-----|
-| `bird: command not found` | bird CLI not installed | Use X API path instead, or `npm i -g bird-cli` |
-| "No Twitter cookies found" | Not logged into X in browser | Log into x.com in Chrome/Firefox, or use X API |
+| `bird: command not found` | bird CLI not installed | Use X API path instead, or `npm i -g @steipete/bird` |
+| "No Twitter cookies found" | Chrome is running and holds a lock on the cookie DB (an `EBUSY` warning appears just above), or you are genuinely not logged in | Quit Chrome fully — on Windows check for a tray or PWA instance keeping it alive — then retry. If still empty, log into x.com or use the X API path |
 | EPERM on Safari cookies | macOS permissions | Use Chrome/Firefox or X API instead |
 | Empty results | Cookies/token expired | Re-login or re-run `x_api_auth.py` |
 | Rate limit (429) | Too many API requests | Wait and retry, use `--count` to limit |

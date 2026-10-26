@@ -26,10 +26,7 @@ else
   CMD+=("$COUNT")
 fi
 
-# Add auth from env if available
-if [[ -n "${AUTH_TOKEN:-}" ]] && [[ -n "${CT0:-}" ]]; then
-  CMD+=(--auth-token "$AUTH_TOKEN" --ct0 "$CT0")
-fi
+# bird reads AUTH_TOKEN and CT0 from the environment directly
 
 # Pass through any extra flags
 CMD+=("$@")

@@ -119,7 +119,7 @@ def fetch_all_bookmarks(token: str, count: int = 20, all_pages: bool = False, si
     remaining = count if not all_pages else float("inf")
 
     while remaining > 0:
-        page_size = min(int(remaining), MAX_RESULTS_PER_PAGE)
+        page_size = int(min(remaining, MAX_RESULTS_PER_PAGE))
         try:
             response = fetch_bookmarks_page(
                 token, user_id, page_size, pagination_token, since_id
