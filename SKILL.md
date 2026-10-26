@@ -90,19 +90,19 @@ If user has a `.env.bird` file or env vars `AUTH_TOKEN`/`CT0`, source them first
 
 ```bash
 # First-time setup (opens browser for OAuth)
-python3 scripts/x_api_auth.py --client-id "YOUR_CLIENT_ID" --client-secret "YOUR_SECRET"
+python -X utf8 scripts/x_api_auth.py --client-id "YOUR_CLIENT_ID" --client-secret "YOUR_SECRET"
 
 # Fetch bookmarks (auto-refreshes token)
-python3 scripts/fetch_bookmarks_api.py -n 20
+python -X utf8 scripts/fetch_bookmarks_api.py -n 20
 
 # All bookmarks
-python3 scripts/fetch_bookmarks_api.py --all
+python -X utf8 scripts/fetch_bookmarks_api.py --all
 
 # Since a specific tweet
-python3 scripts/fetch_bookmarks_api.py --since-id "1234567890"
+python -X utf8 scripts/fetch_bookmarks_api.py --since-id "1234567890"
 
 # Pretty print
-python3 scripts/fetch_bookmarks_api.py -n 50 --pretty
+python -X utf8 scripts/fetch_bookmarks_api.py -n 50 --pretty
 ```
 
 The API script outputs the **same JSON format** as bird CLI, so all downstream workflows work identically.
@@ -113,7 +113,7 @@ The API script outputs the **same JSON format** as bird CLI, so all downstream w
 
 If the user already has a Bearer token (e.g., from another tool), they can skip the OAuth dance:
 ```bash
-X_API_BEARER_TOKEN="your_token" python3 scripts/fetch_bookmarks_api.py -n 20
+X_API_BEARER_TOKEN="your_token" python -X utf8 scripts/fetch_bookmarks_api.py -n 20
 ```
 
 ## JSON Output Format (both backends)
